@@ -12,7 +12,8 @@ class Maps(QMainWindow):
     def __init__(self):
         super().__init__()
         uic.loadUi('des.ui', self)
-        self.coords = '37.622504,55.753215'
+        self.x = '55.753215'
+        self.y = '37.622504'
         self.z = '5'
         self.getImage()
 
@@ -21,19 +22,40 @@ class Maps(QMainWindow):
             if event.key() == QtCore.Qt.Key_PageUp:
                 if 0 <= int(self.z) < 18:
                     self.z = str(int(self.z) + 1)
-                    print(self.z)
                     self.getImage()
             if event.key() == QtCore.Qt.Key_PageDown:
                 if 0 <= int(self.z) < 18:
                     self.z = str(int(self.z) - 1)
-                    print(self.z)
                     self.getImage()
         except BaseException:
             pass
+        if event.key() == QtCore.Qt.Key_Up:
+            if float(self.x) + 0.3 <= 90:
+                self.x = str(float(self.x) + 0.3)
+                self.getImage()
+                print(self.x, self.y)
+
+        if event.key() == QtCore.Qt.Key_Down:
+            if float(self.x) - 0.3 >= -90:
+                self.x = str(float(self.x) - 0.3)
+                self.getImage()
+                print(self.x, self.y)
+
+        if event.key() == QtCore.Qt.Key_Left:
+            if float(self.y) + 0.3 < 180:
+                self.y = str(float(self.y) - 0.3)
+                self.getImage()
+                print(self.x, self.y)
+
+        if event.key() == QtCore.Qt.Key_Right:
+            if float(self.y) - 0.3 >= 0:
+                self.y = str(float(self.y) + 0.3)
+                self.getImage()
+                print(self.x, self.y)
 
     def getImage(self):
         url = "http://static-maps.yandex.ru/1.x/"
-        params = {'ll': self.coords, 'z': f'{self.z}', 'l': 'map'}
+        params = {'ll': f'{self.y},{self.x}', 'z': f'{self.z}', 'l': 'map'}
         response = requests.get(url, params=params)
 
         if not response:
