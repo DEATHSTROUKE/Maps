@@ -4,7 +4,8 @@ import sys
 import requests
 from PyQt5.QtGui import QPixmap
 from PyQt5.QtWidgets import QApplication, QWidget, QLabel, QMainWindow
-from PyQt5 import uic
+from PyQt5 import uic, Qt
+from PyQt5 import QtCore
 
 
 class Maps(QMainWindow):
@@ -12,12 +13,27 @@ class Maps(QMainWindow):
         super().__init__()
         uic.loadUi('des.ui', self)
         self.coords = '37.622504,55.753215'
-        self.spn = '2.222,2.222'
+        self.z = '5'
         self.getImage()
+
+    def keyPressEvent(self, event):
+        try:
+            if event.key() == QtCore.Qt.Key_PageUp:
+                if 0 <= int(self.z) < 18:
+                    self.z = str(int(self.z) + 1)
+                    print(self.z)
+                    self.getImage()
+            if event.key() == QtCore.Qt.Key_PageDown:
+                if 0 <= int(self.z) < 18:
+                    self.z = str(int(self.z) - 1)
+                    print(self.z)
+                    self.getImage()
+        except BaseException:
+            pass
 
     def getImage(self):
         url = "http://static-maps.yandex.ru/1.x/"
-        params = {'ll': self.coords, 'spn': self.spn, 'l': 'map'}
+        params = {'ll': self.coords, 'z': f'{self.z}', 'l': 'map'}
         response = requests.get(url, params=params)
 
         if not response:
