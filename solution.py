@@ -23,6 +23,11 @@ class Maps(QMainWindow):
         self.sput.clicked.connect(lambda: self.change_type_map('sat'))
         self.gibrid.clicked.connect(lambda: self.change_type_map('sat,skl'))
         self.search1.clicked.connect(self.search)
+        self.sbros.clicked.connect(self.clear_search)
+        self.getImage()
+
+    def clear_search(self):
+        self.metka = ''
         self.getImage()
 
     def search(self):
