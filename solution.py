@@ -17,10 +17,33 @@ class Maps(QMainWindow):
         self.z = '5'
         self.l = 'map'
         self.photo = 'map.png'
+        self.text_met = 'pm2rdm'
+        self.metka = ''
         self.schema.clicked.connect(lambda: self.change_type_map('map'))
         self.sput.clicked.connect(lambda: self.change_type_map('sat'))
         self.gibrid.clicked.connect(lambda: self.change_type_map('sat,skl'))
+        self.search1.clicked.connect(self.search)
         self.getImage()
+
+    def search(self):
+        text = self.led.text()
+        url = 'http://geocode-maps.yandex.ru/1.x/'
+        params = {
+            'apikey': '40d1649f-0493-4b70-98ba-98533de7710b',
+            'format': 'json',
+            'geocode': f'{text}'
+        }
+        response = requests.get(url, params=params)
+        if not response:
+            print("Ошибка выполнения запроса")
+            print("Http статус:", response.status_code, "(", response.reason, ")")
+        else:
+            response = response.json()
+            coords = response['response']['GeoObjectCollection']['featureMember'][0]['GeoObject'][
+                'Point']['pos'].split()
+            self.x = coords[1]
+            self.y = coords[0]
+            self.getImage()
 
     def change_type_map(self, type1):
         self.l = type1
@@ -47,28 +70,24 @@ class Maps(QMainWindow):
             if float(self.x) + self.shift < 90:
                 self.x = str(float(self.x) + self.shift)
                 self.getImage()
-                print(self.x, self.y)
 
         if event.key() == QtCore.Qt.Key_Down:
             self.shift = 450 * 180 / 2 ** (int(self.z) + 8)
             if float(self.x) - self.shift > -90:
                 self.x = str(float(self.x) - self.shift)
                 self.getImage()
-                print(self.x, self.y)
 
         if event.key() == QtCore.Qt.Key_Left:
             self.shift = 600 * 360 / 2 ** (int(self.z) + 8)
             if float(self.y) - self.shift > -180:
                 self.y = str(float(self.y) - self.shift)
                 self.getImage()
-                print(self.x, self.y)
 
         if event.key() == QtCore.Qt.Key_Right:
             self.shift = 600 * 360 / 2 ** (int(self.z) + 8)
             if float(self.y) + self.shift < 180:
                 self.y = str(float(self.y) + self.shift)
                 self.getImage()
-                print(self.x, self.y)
 
     def getImage(self):
         url = "http://static-maps.yandex.ru/1.x/"
@@ -86,8 +105,6 @@ class Maps(QMainWindow):
 
     def setImage(self):
         self.pix = QPixmap(self.map_file)
-        # self.pix = self.pix.scaledToWidth(512)
-        # self.pix = self.pix.scaledToHeight(512)
         self.lbl.setPixmap(self.pix)
 
     def closeEvent(self, event):

@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1133</width>
-    <height>855</height>
+    <height>869</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -18,9 +18,9 @@
     <property name="geometry">
      <rect>
       <x>30</x>
-      <y>0</y>
+      <y>20</y>
       <width>600</width>
-      <height>540</height>
+      <height>450</height>
      </rect>
     </property>
     <property name="text">
@@ -31,7 +31,7 @@
     <property name="geometry">
      <rect>
       <x>840</x>
-      <y>20</y>
+      <y>30</y>
       <width>151</width>
       <height>51</height>
      </rect>
@@ -44,7 +44,7 @@
     <property name="geometry">
      <rect>
       <x>840</x>
-      <y>100</y>
+      <y>110</y>
       <width>151</width>
       <height>51</height>
      </rect>
@@ -57,13 +57,44 @@
     <property name="geometry">
      <rect>
       <x>840</x>
-      <y>180</y>
+      <y>190</y>
       <width>151</width>
       <height>51</height>
      </rect>
     </property>
     <property name="text">
      <string>Гибрид</string>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="led">
+    <property name="geometry">
+     <rect>
+      <x>70</x>
+      <y>530</y>
+      <width>551</width>
+      <height>61</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>10</pointsize>
+     </font>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="search1">
+    <property name="geometry">
+     <rect>
+      <x>680</x>
+      <y>540</y>
+      <width>131</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>искать</string>
     </property>
    </widget>
   </widget>
