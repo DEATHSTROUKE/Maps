@@ -20,56 +20,61 @@ class Maps(QMainWindow):
     def keyPressEvent(self, event):
         try:
             if event.key() == QtCore.Qt.Key_PageUp:
-                if 0 <= int(self.z) < 18:
+                if int(self.z) < 18:
                     self.z = str(int(self.z) + 1)
                     self.getImage()
             if event.key() == QtCore.Qt.Key_PageDown:
-                if 0 <= int(self.z) < 18:
+                if 0 <= int(self.z):
                     self.z = str(int(self.z) - 1)
                     self.getImage()
         except BaseException:
             pass
         if event.key() == QtCore.Qt.Key_Up:
-            if float(self.x) + 0.3 <= 90:
-                self.x = str(float(self.x) + 0.3)
+            self.shift = 450 * 180 / 2 ** (int(self.z) + 8)
+            if float(self.x) + self.shift < 90:
+                self.x = str(float(self.x) + self.shift)
                 self.getImage()
                 print(self.x, self.y)
 
         if event.key() == QtCore.Qt.Key_Down:
-            if float(self.x) - 0.3 >= -90:
-                self.x = str(float(self.x) - 0.3)
+            self.shift = 450 * 180 / 2 ** (int(self.z) + 8)
+            if float(self.x) - self.shift > -90:
+                self.x = str(float(self.x) - self.shift)
                 self.getImage()
                 print(self.x, self.y)
 
         if event.key() == QtCore.Qt.Key_Left:
-            if float(self.y) + 0.3 < 180:
-                self.y = str(float(self.y) - 0.3)
+            self.shift = 600 * 360 / 2 ** (int(self.z) + 8)
+            if float(self.y) - self.shift > -180:
+                self.y = str(float(self.y) - self.shift)
                 self.getImage()
                 print(self.x, self.y)
 
         if event.key() == QtCore.Qt.Key_Right:
-            if float(self.y) - 0.3 >= 0:
-                self.y = str(float(self.y) + 0.3)
+            self.shift = 600 * 360 / 2 ** (int(self.z) + 8)
+            if float(self.y) + self.shift < 180:
+                self.y = str(float(self.y) + self.shift)
                 self.getImage()
                 print(self.x, self.y)
 
     def getImage(self):
         url = "http://static-maps.yandex.ru/1.x/"
-        params = {'ll': f'{self.y},{self.x}', 'z': f'{self.z}', 'l': 'map'}
+        params = {'ll': f'{self.y},{self.x}', 'z': f'{self.z}', 'l': 'map', 'size': '600,450'}
         response = requests.get(url, params=params)
 
         if not response:
             print("Ошибка выполнения запроса")
             print("Http статус:", response.status_code, "(", response.reason, ")")
-            sys.exit(1)
-
-        self.map_file = "map.png"
-        with open(self.map_file, "wb") as file:
-            file.write(response.content)
-        self.setImage()
+        else:
+            self.map_file = "map.png"
+            with open(self.map_file, "wb") as file:
+                file.write(response.content)
+            self.setImage()
 
     def setImage(self):
         self.pix = QPixmap(self.map_file)
+        # self.pix = self.pix.scaledToWidth(512)
+        # self.pix = self.pix.scaledToHeight(512)
         self.lbl.setPixmap(self.pix)
 
     def closeEvent(self, event):
