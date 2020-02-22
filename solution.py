@@ -43,6 +43,7 @@ class Maps(QMainWindow):
                 'Point']['pos'].split()
             self.x = coords[1]
             self.y = coords[0]
+            self.metka = f'{self.y},{self.x},{self.text_met}'
             self.getImage()
 
     def change_type_map(self, type1):
@@ -91,7 +92,12 @@ class Maps(QMainWindow):
 
     def getImage(self):
         url = "http://static-maps.yandex.ru/1.x/"
-        params = {'ll': f'{self.y},{self.x}', 'z': f'{self.z}', 'l': self.l, 'size': '600,450'}
+        params = {
+            'll': f'{self.y},{self.x}',
+            'z': f'{self.z}',
+            'l': self.l,
+            'pt': self.metka,
+            'size': '600,450'}
         response = requests.get(url, params=params)
 
         if not response:
