@@ -1,0 +1,221 @@
+{
+  'response': {
+    'GeoObjectCollection': {
+      'metaDataProperty': {
+        'GeocoderResponseMetaData': {
+          'request': 'Москва Красная площадь',
+          'results': '10',
+          'found': '3'
+        }
+      },
+      'featureMember': [
+        {
+          'GeoObject': {
+            'metaDataProperty': {
+              'GeocoderMetaData': {
+                'precision': 'street',
+                'text': 'Россия, Москва, Красная площадь',
+                'kind': 'street',
+                'Address': {
+                  'country_code': 'RU',
+                  'formatted': 'Россия, Москва, Красная площадь',
+                  'Components': [
+                    {
+                      'kind': 'country',
+                      'name': 'Россия'
+                    },
+                    {
+                      'kind': 'province',
+                      'name': 'Центральный федеральный округ'
+                    },
+                    {
+                      'kind': 'province',
+                      'name': 'Москва'
+                    },
+                    {
+                      'kind': 'locality',
+                      'name': 'Москва'
+                    },
+                    {
+                      'kind': 'street',
+                      'name': 'Красная площадь'
+                    }
+                  ]
+                },
+                'AddressDetails': {
+                  'Country': {
+                    'AddressLine': 'Россия, Москва, Красная площадь',
+                    'CountryNameCode': 'RU',
+                    'CountryName': 'Россия',
+                    'AdministrativeArea': {
+                      'AdministrativeAreaName': 'Москва',
+                      'Locality': {
+                        'LocalityName': 'Москва',
+                        'Thoroughfare': {
+                          'ThoroughfareName': 'Красная площадь'
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            'name': 'Красная площадь',
+            'description': 'Москва, Россия',
+            'boundedBy': {
+              'Envelope': {
+                'lowerCorner': '37.617932 55.751979',
+                'upperCorner': '37.623834 55.755251'
+              }
+            },
+            'Point': {
+              'pos': '37.621031 55.753595'
+            }
+          }
+        },
+        {
+          'GeoObject': {
+            'metaDataProperty': {
+              'GeocoderMetaData': {
+                'precision': 'street',
+                'text': 'Россия, Тамбовская область, Мучкапский район, рабочий посёлок Мучкапский, улица Красная Москва',
+                'kind': 'street',
+                'Address': {
+                  'country_code': 'RU',
+                  'formatted': 'Россия, Тамбовская область, Мучкапский район, рабочий посёлок Мучкапский, улица Красная Москва',
+                  'Components': [
+                    {
+                      'kind': 'country',
+                      'name': 'Россия'
+                    },
+                    {
+                      'kind': 'province',
+                      'name': 'Центральный федеральный округ'
+                    },
+                    {
+                      'kind': 'province',
+                      'name': 'Тамбовская область'
+                    },
+                    {
+                      'kind': 'area',
+                      'name': 'Мучкапский район'
+                    },
+                    {
+                      'kind': 'locality',
+                      'name': 'рабочий посёлок Мучкапский'
+                    },
+                    {
+                      'kind': 'street',
+                      'name': 'улица Красная Москва'
+                    }
+                  ]
+                },
+                'AddressDetails': {
+                  'Country': {
+                    'AddressLine': 'Россия, Тамбовская область, Мучкапский район, рабочий посёлок Мучкапский, улица Красная Москва',
+                    'CountryNameCode': 'RU',
+                    'CountryName': 'Россия',
+                    'AdministrativeArea': {
+                      'AdministrativeAreaName': 'Тамбовская область',
+                      'SubAdministrativeArea': {
+                        'SubAdministrativeAreaName': 'Мучкапский район',
+                        'Locality': {
+                          'LocalityName': 'рабочий посёлок Мучкапский',
+                          'Thoroughfare': {
+                            'ThoroughfareName': 'улица Красная Москва'
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            'name': 'улица Красная Москва',
+            'description': 'рабочий посёлок Мучкапский, Мучкапский район, Тамбовская область, Россия',
+            'boundedBy': {
+              'Envelope': {
+                'lowerCorner': '42.450751 51.841008',
+                'upperCorner': '42.462573 51.846934'
+              }
+            },
+            'Point': {
+              'pos': '42.456626 51.845053'
+            }
+          }
+        },
+        {
+          'GeoObject': {
+            'metaDataProperty': {
+              'GeocoderMetaData': {
+                'precision': 'street',
+                'text': 'Россия, Тамбовская область, Мучкапский район, село Кулябовка, улица Красная Москва',
+                'kind': 'street',
+                'Address': {
+                  'country_code': 'RU',
+                  'formatted': 'Россия, Тамбовская область, Мучкапский район, село Кулябовка, улица Красная Москва',
+                  'Components': [
+                    {
+                      'kind': 'country',
+                      'name': 'Россия'
+                    },
+                    {
+                      'kind': 'province',
+                      'name': 'Центральный федеральный округ'
+                    },
+                    {
+                      'kind': 'province',
+                      'name': 'Тамбовская область'
+                    },
+                    {
+                      'kind': 'area',
+                      'name': 'Мучкапский район'
+                    },
+                    {
+                      'kind': 'locality',
+                      'name': 'село Кулябовка'
+                    },
+                    {
+                      'kind': 'street',
+                      'name': 'улица Красная Москва'
+                    }
+                  ]
+                },
+                'AddressDetails': {
+                  'Country': {
+                    'AddressLine': 'Россия, Тамбовская область, Мучкапский район, село Кулябовка, улица Красная Москва',
+                    'CountryNameCode': 'RU',
+                    'CountryName': 'Россия',
+                    'AdministrativeArea': {
+                      'AdministrativeAreaName': 'Тамбовская область',
+                      'SubAdministrativeArea': {
+                        'SubAdministrativeAreaName': 'Мучкапский район',
+                        'Locality': {
+                          'LocalityName': 'село Кулябовка',
+                          'Thoroughfare': {
+                            'ThoroughfareName': 'улица Красная Москва'
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            'name': 'улица Красная Москва',
+            'description': 'село Кулябовка, Мучкапский район, Тамбовская область, Россия',
+            'boundedBy': {
+              'Envelope': {
+                'lowerCorner': '42.360641 51.786254',
+                'upperCorner': '42.369148 51.788449'
+              }
+            },
+            'Point': {
+              'pos': '42.364684 51.788081'
+            }
+          }
+        }
+      ]
+    }
+  }
+}

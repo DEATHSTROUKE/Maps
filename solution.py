@@ -28,6 +28,7 @@ class Maps(QMainWindow):
 
     def clear_search(self):
         self.metka = ''
+        self.address1.setPlainText('')
         self.getImage()
 
     def search(self):
@@ -44,6 +45,10 @@ class Maps(QMainWindow):
             print("Http статус:", response.status_code, "(", response.reason, ")")
         else:
             response = response.json()
+            address = response['response']['GeoObjectCollection'][
+                'featureMember'][0]['GeoObject']['metaDataProperty'][
+                'GeocoderMetaData']['text']
+            self.address1.setPlainText(address)
             coords = response['response']['GeoObjectCollection']['featureMember'][0]['GeoObject'][
                 'Point']['pos'].split()
             self.x = coords[1]
