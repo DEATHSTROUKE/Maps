@@ -19,12 +19,32 @@ class Maps(QMainWindow):
         self.photo = 'map.png'
         self.text_met = 'pm2rdm'
         self.metka = ''
+        self.is_index = False
+        self.resp = ''
         self.schema.clicked.connect(lambda: self.change_type_map('map'))
         self.sput.clicked.connect(lambda: self.change_type_map('sat'))
         self.gibrid.clicked.connect(lambda: self.change_type_map('sat,skl'))
         self.search1.clicked.connect(self.search)
         self.sbros.clicked.connect(self.clear_search)
+        self.index1.stateChanged.connect(self.add_index)
         self.getImage()
+
+    def add_index(self):
+        if not self.is_index:
+            self.is_index = True
+            if self.resp:
+                text = self.address1.toPlainText()
+                text += '\nПочтовый индекс: '
+                index = self.resp['response']['GeoObjectCollection']['featureMember'][0][
+                    'GeoObject']['metaDataProperty']['GeocoderMetaData']['Address']['postal_code']
+                text += index
+                self.address1.setPlainText(text)
+        else:
+            self.is_index = False
+            text = self.address1.toPlainText()
+            text = text.split('\n')
+            text = '\n'.join(text[:-1])
+            self.address1.setPlainText(text)
 
     def clear_search(self):
         self.metka = ''
@@ -44,17 +64,27 @@ class Maps(QMainWindow):
             print("Ошибка выполнения запроса")
             print("Http статус:", response.status_code, "(", response.reason, ")")
         else:
-            response = response.json()
-            address = response['response']['GeoObjectCollection'][
-                'featureMember'][0]['GeoObject']['metaDataProperty'][
-                'GeocoderMetaData']['text']
-            self.address1.setPlainText(address)
-            coords = response['response']['GeoObjectCollection']['featureMember'][0]['GeoObject'][
-                'Point']['pos'].split()
-            self.x = coords[1]
-            self.y = coords[0]
-            self.metka = f'{self.y},{self.x},{self.text_met}'
-            self.getImage()
+            try:
+                response = response.json()
+                self.resp = response
+                address = response['response']['GeoObjectCollection'][
+                    'featureMember'][0]['GeoObject']['metaDataProperty'][
+                    'GeocoderMetaData']['text']
+                if self.is_index:
+                    address += '\nПочтовый индекс: '
+                    index = response['response']['GeoObjectCollection']['featureMember'][0][
+                        'GeoObject']['metaDataProperty']['GeocoderMetaData']['Address']['postal_code']
+                    print(index)
+                    address += index
+                self.address1.setPlainText(address)
+                coords = response['response']['GeoObjectCollection']['featureMember'][0]['GeoObject'][
+                    'Point']['pos'].split()
+                self.x = coords[1]
+                self.y = coords[0]
+                self.metka = f'{self.y},{self.x},{self.text_met}'
+                self.getImage()
+            except BaseException:
+                pass
 
     def change_type_map(self, type1):
         self.l = type1
