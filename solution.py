@@ -15,6 +15,19 @@ class Maps(QMainWindow):
         self.x = '55.753215'
         self.y = '37.622504'
         self.z = '5'
+        self.l = 'map'
+        self.photo = 'map.png'
+        self.schema.clicked.connect(lambda: self.change_type_map('map'))
+        self.sput.clicked.connect(lambda: self.change_type_map('sat'))
+        self.gibrid.clicked.connect(lambda: self.change_type_map('sat,skl'))
+        self.getImage()
+
+    def change_type_map(self, type1):
+        self.l = type1
+        if self.l != 'map':
+            self.photo = 'map.jpg'
+        else:
+            self.photo = 'map.png'
         self.getImage()
 
     def keyPressEvent(self, event):
@@ -59,14 +72,14 @@ class Maps(QMainWindow):
 
     def getImage(self):
         url = "http://static-maps.yandex.ru/1.x/"
-        params = {'ll': f'{self.y},{self.x}', 'z': f'{self.z}', 'l': 'map', 'size': '600,450'}
+        params = {'ll': f'{self.y},{self.x}', 'z': f'{self.z}', 'l': self.l, 'size': '600,450'}
         response = requests.get(url, params=params)
 
         if not response:
             print("Ошибка выполнения запроса")
             print("Http статус:", response.status_code, "(", response.reason, ")")
         else:
-            self.map_file = "map.png"
+            self.map_file = self.photo
             with open(self.map_file, "wb") as file:
                 file.write(response.content)
             self.setImage()

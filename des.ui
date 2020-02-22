@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1010</width>
-    <height>825</height>
+    <width>1133</width>
+    <height>855</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -27,13 +27,52 @@
      <string/>
     </property>
    </widget>
+   <widget class="QPushButton" name="schema">
+    <property name="geometry">
+     <rect>
+      <x>840</x>
+      <y>20</y>
+      <width>151</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Схема</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="sput">
+    <property name="geometry">
+     <rect>
+      <x>840</x>
+      <y>100</y>
+      <width>151</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Спутник</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="gibrid">
+    <property name="geometry">
+     <rect>
+      <x>840</x>
+      <y>180</y>
+      <width>151</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Гибрид</string>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1010</width>
+     <width>1133</width>
      <height>31</height>
     </rect>
    </property>
