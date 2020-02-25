@@ -5,7 +5,7 @@ import requests
 from PyQt5.QtGui import QPixmap
 from PyQt5.QtWidgets import QApplication, QWidget, QLabel, QMainWindow
 from PyQt5 import uic, Qt
-from PyQt5.QtCore import QPoint
+from PyQt5.QtCore import Qt
 from PyQt5 import QtCore
 
 
@@ -99,42 +99,42 @@ class Maps(QMainWindow):
         self.getImage()
 
     def mousePressEvent(self, event):
-        x_m = event.pos().x()
-        y_m = event.pos().y()
-        if 0 <= x_m < 600 and 0 <= y_m < 450:
-            x = (x_m - 300) * 360 / 2 ** (int(self.z) + 8)
-            y = (y_m - 225) * 230 / 2 ** (int(self.z) + 8)
-            self.x = str(float(self.x) - y)
-            self.y = str(x + float(self.y))
-            self.metka = f'{self.y},{self.x},{self.text_met}'
-            self.getImage()
-            url = 'http://geocode-maps.yandex.ru/1.x/'
-            params = {
-                'apikey': '40d1649f-0493-4b70-98ba-98533de7710b',
-                'format': 'json',
-                'geocode': f'{self.y},{self.x}'
-            }
-            response = requests.get(url, params=params)
-            if not response:
-                print("Ошибка выполнения запроса")
-                print("Http статус:", response.status_code, "(", response.reason, ")")
-            else:
-                try:
-                    response = response.json()
-                    print(response)
-                    self.resp = response
-                    address = response['response']['GeoObjectCollection'][
-                        'featureMember'][0]['GeoObject']['metaDataProperty'][
-                        'GeocoderMetaData']['text']
-                    if self.is_index:
-                        address += '\nПочтовый индекс: '
-                        index = response['response']['GeoObjectCollection']['featureMember'][0][
-                            'GeoObject']['metaDataProperty']['GeocoderMetaData']['Address']['postal_code']
-                        print(index)
-                        address += index
-                    self.address1.setPlainText(address)
-                except BaseException:
-                    pass
+        if event.button() == Qt.LeftButton:
+            x_m = event.pos().x()
+            y_m = event.pos().y()
+            if 0 <= x_m < 600 and 0 <= y_m < 450:
+                x = (x_m - 300) * 360 / 2 ** (int(self.z) + 8)
+                y = (y_m - 225) * 230 / 2 ** (int(self.z) + 8)
+                self.x = str(float(self.x) - y)
+                self.y = str(x + float(self.y))
+                self.metka = f'{self.y},{self.x},{self.text_met}'
+                self.getImage()
+                url = 'http://geocode-maps.yandex.ru/1.x/'
+                params = {
+                    'apikey': '40d1649f-0493-4b70-98ba-98533de7710b',
+                    'format': 'json',
+                    'geocode': f'{self.y},{self.x}'
+                }
+                response = requests.get(url, params=params)
+                if not response:
+                    print("Ошибка выполнения запроса")
+                    print("Http статус:", response.status_code, "(", response.reason, ")")
+                else:
+                    try:
+                        response = response.json()
+                        self.resp = response
+                        address = response['response']['GeoObjectCollection'][
+                            'featureMember'][0]['GeoObject']['metaDataProperty'][
+                            'GeocoderMetaData']['text']
+                        if self.is_index:
+                            address += '\nПочтовый индекс: '
+                            index = response['response']['GeoObjectCollection']['featureMember'][0][
+                                'GeoObject']['metaDataProperty']['GeocoderMetaData']['Address']['postal_code']
+                            print(index)
+                            address += index
+                        self.address1.setPlainText(address)
+                    except BaseException:
+                        pass
 
     def keyPressEvent(self, event):
         try:
