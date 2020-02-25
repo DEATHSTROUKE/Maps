@@ -12,6 +12,7 @@ class Maps(QMainWindow):
     def __init__(self):
         super().__init__()
         uic.loadUi('des.ui', self)
+        self.lbl.setFocus()
         self.x = '55.753215'
         self.y = '37.622504'
         self.z = '5'
@@ -47,11 +48,13 @@ class Maps(QMainWindow):
             self.address1.setPlainText(text)
 
     def clear_search(self):
+        self.lbl.setFocus()
         self.metka = ''
         self.address1.setPlainText('')
         self.getImage()
 
     def search(self):
+        self.lbl.setFocus()
         text = self.led.text()
         url = 'http://geocode-maps.yandex.ru/1.x/'
         params = {
