@@ -1,0 +1,44 @@
+{
+  'type': 'Feature',
+  'geometry': {
+    'type': 'Point',
+    'coordinates': [
+      37.581813,
+      55.754067
+    ]
+  },
+  'properties': {
+    'name': 'Globalrooms',
+    'description': 'Новинский бул., 13, стр. 4, Москва, Россия',
+    'boundedBy': [
+      [
+        37.577708,
+        55.75175193
+      ],
+      [
+        37.585918,
+        55.75638193
+      ]
+    ],
+    'CompanyMetaData': {
+      'id': '104048557808',
+      'name': 'Globalrooms',
+      'address': 'Россия, Москва, Новинский бульвар, 13с4',
+      'Categories': [
+        {
+          'class': 'hotels',
+          'name': 'Гостиница'
+        }
+      ],
+      'Hours': {
+        'text': 'ежедневно, круглосуточно',
+        'Availabilities': [
+          {
+            'TwentyFourHours': True,
+            'Everyday': True
+          }
+        ]
+      }
+    }
+  }
+}

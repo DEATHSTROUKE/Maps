@@ -1,5 +1,6 @@
 import os
 import sys
+from math import radians, sin, sqrt, asin, cos
 
 import requests
 from PyQt5.QtGui import QPixmap
@@ -135,6 +136,97 @@ class Maps(QMainWindow):
                         self.address1.setPlainText(address)
                     except BaseException:
                         pass
+        elif event.button() == Qt.RightButton:
+            x_m = event.pos().x()
+            y_m = event.pos().y()
+            if 0 <= x_m < 600 and 0 <= y_m < 450:
+                x = (x_m - 300) * 360 / 2 ** (int(self.z) + 8)
+                y = (y_m - 225) * 230 / 2 ** (int(self.z) + 8)
+                self.x = str(float(self.x) - y)
+                self.y = str(x + float(self.y))
+                self.metka = f'{self.y},{self.x},{self.text_met}'
+                self.organisation()
+
+    def organisation(self):
+        url = 'http://geocode-maps.yandex.ru/1.x/'
+        params = {
+            'apikey': '40d1649f-0493-4b70-98ba-98533de7710b',
+            'format': 'json',
+            'geocode': f'{self.y},{self.x}'
+        }
+        response = requests.get(url, params=params)
+        if not response:
+            print("Ошибка выполнения запроса")
+            print("Http статус:", response.status_code, "(", response.reason, ")")
+        else:
+            try:
+                response = response.json()
+                self.resp = response
+                address = response['response']['GeoObjectCollection'][
+                    'featureMember'][0]['GeoObject']['metaDataProperty'][
+                    'GeocoderMetaData']['text']
+                print(address)
+            except BaseException:
+                pass
+
+        url = "https://search-maps.yandex.ru/v1/"
+        params = {
+            "apikey": 'dda3ddba-c9ea-4ead-9010-f43fbc15c6e3',
+            'text': address,
+            "lang": "ru_RU",
+            'spn': '0.005,0.005',
+            "type": "biz",
+            'results': 10
+        }
+        response = requests.get(url, params=params)
+        response = response.json()
+        print(response)
+        if not response:
+            print("Ошибка выполнения запроса")
+            print("Http статус:", response.status_code, "(", response.reason, ")")
+        else:
+            min1 = 50
+            min_org = ''
+            for i in range(10):
+                try:
+                    org = response["features"][i]
+                    y, x = org["geometry"]["coordinates"]
+                    s = self.get_long([float(self.y), float(self.x)], [y, x])
+                    print(s, org)
+                    if min1 > s:
+                        min1 = s
+                        min_org = org
+                except IndexError:
+                    pass
+            try:
+                print(min1, min_org, sep='\n')
+                address = min_org['properties']['name']
+                address = address + '\n' + min_org['properties']['description']
+                self.address1.setPlainText(address)
+                self.y, self.x = min_org['geometry']['coordinates']
+                self.y, self.x = str(self.y), str(self.x)
+                self.metka = f'{self.y},{self.x},{self.text_met}'
+                self.getImage()
+            except BaseException:
+                pass
+
+    def get_long(self, a, b):
+        degree_to_meters_factor = 111 * 1000  # 111 километров в метрах
+        a_lon, a_lat = a
+        b_lon, b_lat = b
+
+        # Берем среднюю по широте точку и считаем коэффициент для нее.
+        radians_lattitude = radians((a_lat + b_lat) / 2.)
+        lat_lon_factor = cos(radians_lattitude)
+
+        # Вычисляем смещения в метрах по вертикали и горизонтали.
+        dx = abs(a_lon - b_lon) * degree_to_meters_factor * lat_lon_factor
+        dy = abs(a_lat - b_lat) * degree_to_meters_factor
+
+        # Вычисляем расстояние между точками.
+        distance = sqrt(dx * dx + dy * dy)
+
+        return distance
 
     def keyPressEvent(self, event):
         try:
